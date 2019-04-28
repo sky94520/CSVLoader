@@ -19,12 +19,13 @@ public:
 	void loadStr(const std::string& text);
 
 	//跳过下一行
-	void skip();
+	void skip(int num=1);
 
 	//是否还有下一行
 	bool hasNextLine();
 
 	int nextInt();
+	float nextFloat();
 	std::string nextStr();
 private:
 	void readLine();

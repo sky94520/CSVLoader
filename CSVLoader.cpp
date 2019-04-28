@@ -48,14 +48,25 @@ void CSVLoader::loadStr(const std::string& text)
 	_hasMore = true;
 }
 
-void CSVLoader::skip()
+void CSVLoader::skip(int num)
 {
 	std::string src;
+	int index = 0;
+
 	//读取一行
-	if (getline(_reader, src))
-		;
-	else
-		_hasMore = false;
+	while (index < num)
+	{
+		if (getline(_reader, src))
+		{
+		}
+		else
+		{
+			_hasMore = false;
+			return;
+		}
+
+		index += 1;
+	}
 }
 
 bool CSVLoader::hasNextLine()
@@ -75,6 +86,16 @@ int CSVLoader::nextInt()
 	//获取
 	const std::string& token = _queue.front();
 	int number = std::stoi(token);
+	_queue.erase(_queue.begin());
+
+	return number;
+}
+
+float CSVLoader::nextFloat()
+{
+	//获取
+	const std::string& token = _queue.front();
+	float number = std::stof(token);
 	_queue.erase(_queue.begin());
 
 	return number;

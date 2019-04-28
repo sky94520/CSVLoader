@@ -11,7 +11,7 @@ int main()
 	if (loader->loadCSV("test.csv"))
 	{
 		//跳过第一行
-		loader->skip();
+		loader->skip(1);
 
 		while (loader->hasNextLine())
 		{
@@ -20,8 +20,9 @@ int main()
 			int hp = loader->nextInt();
 			int mp = loader->nextInt();
 			int atk = loader->nextInt();
+			float f = loader->nextFloat();
 
-			cout << id << "," << name << "," << hp << "," << mp << atk << endl;
+			cout << id << "," << name << "," << hp << "," << mp << atk << f << endl;
 		}
 	}
 

@@ -1,3 +1,3 @@
-ID,Name,Hp,Mp,Atk
-01,sky,10,8,5
-02,moon,7,12,3
+ID,Name,Hp,Mp,Atk,float
+01,sky,10,8,5,1.2
+02,moon,7,12,3,0.8
