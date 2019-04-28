@@ -15,37 +15,42 @@ bool CSVLoader::loadCSV(const std::string& filename)
 	std::ifstream in;
 	in.open(filename);
 
-	//´ò¿ªÎÄ¼şÊ§°Ü
+	//æ‰“å¼€æ–‡ä»¶å¤±è´¥
 	if (!in.is_open()) 
 		return false;
-	//¶¨Î»µ½ÎÄ¼şµÄÄ©Î²
+	//å®šä½åˆ°æ–‡ä»¶çš„æœ«å°¾
 	in.seekg(0, std::ios::end);
-	//»ñÈ¡×Ü³¤¶È
+	//è·å–æ€»é•¿åº¦
 	int size = (int)in.tellg();
 
 	char* buffer = new char[size + 1];
 	memset(buffer, '\0', size + 1);
 
-	//¶ÁÈ¡
+	//è¯»å–
 	in.seekg(0, std::ios::beg);
 	in.read(buffer, size);
-	//¹Ø±ÕÎÄ¼ş
+	//å…³é—­æ–‡ä»¶
 	in.close();
 
-	//ÉèÖÃ±äÁ¿
+	//è®¾ç½®å˜é‡
 	_reader = std::stringstream(buffer);
 	_hasMore = true;
 
-	//ÊÍ·Å±äÁ¿
+	//é‡Šæ”¾å˜é‡
 	delete[] buffer;
 
 	return true;
 }
 
-void CSVLoader::loadStr(const std::string& text)
+bool CSVLoader::loadStr(const std::string& text)
 {
+	if (text.size() == 0)
+		return false;
+
 	_reader = std::stringstream(text);
 	_hasMore = true;
+
+	return true;
 }
 
 void CSVLoader::skip(int num)
@@ -53,7 +58,7 @@ void CSVLoader::skip(int num)
 	std::string src;
 	int index = 0;
 
-	//¶ÁÈ¡Ò»ĞĞ
+	//è¯»å–ä¸€è¡Œ
 	while (index < num)
 	{
 		if (getline(_reader, src))
@@ -83,7 +88,7 @@ bool CSVLoader::hasNextLine()
 
 int CSVLoader::nextInt()
 {
-	//»ñÈ¡
+	//è·å–
 	const std::string& token = _queue.front();
 	int number = std::stoi(token);
 	_queue.erase(_queue.begin());
@@ -93,7 +98,7 @@ int CSVLoader::nextInt()
 
 float CSVLoader::nextFloat()
 {
-	//»ñÈ¡
+	//è·å–
 	const std::string& token = _queue.front();
 	float number = std::stof(token);
 	_queue.erase(_queue.begin());
@@ -112,7 +117,7 @@ std::string CSVLoader::nextStr()
 void CSVLoader::readLine()
 {
 	std::string src;
-	//¶ÁÈ¡Ò»ĞĞ,Ö®ºó°Ñ¶ÁÈ¡µ½µÄµ¥´Ê±£´æµ½_queueÖĞ
+	//è¯»å–ä¸€è¡Œ,ä¹‹åæŠŠè¯»å–åˆ°çš„å•è¯ä¿å­˜åˆ°_queueä¸­
 	if (getline(_reader, src))
 	{
 		size_t nend = 0;

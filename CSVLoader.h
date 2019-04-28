@@ -16,7 +16,7 @@ public:
 	//加载csv文件
 	bool loadCSV(const std::string& filename);
 	//加载字符串
-	void loadStr(const std::string& text);
+	bool loadStr(const std::string& text);
 
 	//跳过下一行
 	void skip(int num=1);
